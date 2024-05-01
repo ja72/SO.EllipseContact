@@ -6,9 +6,9 @@ My solution involves two numerical methods, a bisection of the location of the t
 
 ![fig1](https://i.sstatic.net/f84ASK6t.png)
 
-## Closest Point on ellipse to outside point
+## Closest Point on an ellipse to outside point
 
-The code snippet below shows the single point iteration algorithm used for the ellipse-circle distance
+The code snippet below shows the single-point iteration algorithm used for the ellipse-circle distance
 
 ```C#
 public Point GetClosestPoint(Point point, double tol)
@@ -33,7 +33,7 @@ public Point GetClosestPoint(Point point, double tol)
 
 ## Search for circle-ellipse tangency
 
-The code snipper below used a bisection method to find the location of the circle that is tangent to the ellipse.
+The code snipper below used a bisection method to find the circle's location that is tangent to the ellipse.
 
 ```C#
   Ellipse ellipse = new Ellipse(7, 1);
@@ -51,4 +51,14 @@ The code snipper below used a bisection method to find the location of the circl
   Circle circle = new Circle(arc.GetPoint(u_sol), 1);
   Point closest = ellipse.GetClosestPoint(circle, NumericalMethods.LooseTolerance);
   double distance = closest.DistanceTo(circle);
+```
+
+## Sample Output
+
+```text
+Arc     = Circle(x=10, y=-4, r=8)
+Target  = Ellipse(x=0, y=0, rx=7, ry=1)
+Circle  = Circle(x=4.46565766050686, y=1.77676854905003, r=1)
+Contact = Point(x=4.35294539705547, y=0.783136894362217)
+distance= 3.95975714484464E-06
 ```
