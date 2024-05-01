@@ -5,15 +5,15 @@ using static System.Math;
 
 namespace SO
 {
-    public readonly struct Ellipse :
-        IEquatable<Ellipse>,
+    public readonly struct Ellipse2 :
+        IEquatable<Ellipse2>,
         IFormattable
     {
-        public Ellipse(double majorAxis, double minorAxis)
-            : this(Point.Origin, majorAxis, minorAxis)
+        public Ellipse2(double majorAxis, double minorAxis)
+            : this(Point2.Origin, majorAxis, minorAxis)
         {
         }
-        public Ellipse(Point center, double majorAxis, double minorAxis)
+        public Ellipse2(Point2 center, double majorAxis, double minorAxis)
         {
             this.Center = center;
             this.MajorAxis=majorAxis;
@@ -22,17 +22,17 @@ namespace SO
 
         public double MajorAxis { get; }
         public double MinorAxis { get; }
-        public Point Center { get; }
+        public Point2 Center { get; }
 
-        public Point GetPoint(double t)
+        public Point2 GetPoint(double t)
         {
             double x = Center.X + MajorAxis * Cos(t), y = Center.Y + MinorAxis * Sin(t);
-            return new Point(x, y);
+            return new Point2(x, y);
         }
-        public Point GetClosestPoint(Circle circle, double tol)
+        public Point2 GetClosestPoint(Circle2 circle, double tol)
             => GetClosestPoint(circle.Center, tol);
 
-        public Point GetClosestPoint(Point point, double tol)
+        public Point2 GetClosestPoint(Point2 point, double tol)
         {
             double cx = point.X - Center.X, cy = point.Y - Center.Y;
             double Q = MajorAxis*MajorAxis-MinorAxis*MinorAxis;
@@ -50,16 +50,36 @@ namespace SO
 
             return GetPoint(t);
         }
+        public Point2 GetClosestPoint(Line2 line, double tol)
+        {
+            var (a, b, c)= line.Coords;
+            var (cx, cy) = Center.Coords;
+            // transform line coordinates to being relative to ellipse center
+            c -= -a*cx - b*cy;
+            double rx = MajorAxis, ry = MinorAxis;
 
-        public double DistanceTo(Point point, double tol)
+            double IterFun(double z)
+            {
+                return (b*ry-a*rx*z)*(a*rx+b*ry*z)/(a*c*rx*Sqrt(1+z*z))+(b*ry)/(a*rx);
+            }
+
+            double z_sol = NumericalMethods.GaussPointIteration(IterFun, 0, tol);
+
+            double t = Atan(z_sol);
+
+            return GetPoint(t);
+
+        }
+
+        public double DistanceTo(Point2 point, double tol)
             => GetClosestPoint(point, tol).DistanceTo(point);
-        public double DistanceTo(Circle circle, double tol)
+        public double DistanceTo(Circle2 circle, double tol)
             => GetClosestPoint(circle.Center, tol).DistanceTo(circle);
 
         #region Equality
-        public override bool Equals(object obj) => obj is Ellipse ellipse && Equals(ellipse);
+        public override bool Equals(object obj) => obj is Ellipse2 ellipse && Equals(ellipse);
 
-        public bool Equals(Ellipse other)
+        public bool Equals(Ellipse2 other)
         {
             return MajorAxis==other.MajorAxis&&
                    MinorAxis==other.MinorAxis&&
@@ -71,16 +91,16 @@ namespace SO
             var hashCode = -1545607722;
             hashCode=hashCode*-1521134295+MajorAxis.GetHashCode();
             hashCode=hashCode*-1521134295+MinorAxis.GetHashCode();
-            hashCode=hashCode*-1521134295+EqualityComparer<Point>.Default.GetHashCode(Center);
+            hashCode=hashCode*-1521134295+EqualityComparer<Point2>.Default.GetHashCode(Center);
             return hashCode;
         }
 
-        public static bool operator ==(Ellipse ellipse1, Ellipse ellipse2)
+        public static bool operator ==(Ellipse2 ellipse1, Ellipse2 ellipse2)
         {
             return ellipse1.Equals(ellipse2);
         }
 
-        public static bool operator !=(Ellipse ellipse1, Ellipse ellipse2)
+        public static bool operator !=(Ellipse2 ellipse1, Ellipse2 ellipse2)
         {
             return !(ellipse1==ellipse2);
         }

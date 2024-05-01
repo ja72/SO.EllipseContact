@@ -12,23 +12,23 @@ namespace SO
     {
         static void Main(string[] args)
         {
-            Ellipse ellipse = new Ellipse(7, 1);
-            Point pivot = new Point(10, -4);
-            Circle arc = new Circle(pivot, 8);
+            Ellipse2 ellipse = new Ellipse2(7, 1);
+            Point2 pivot = new Point2(10, -4);
+            Circle2 arc = new Circle2(pivot, 8);
 
             Console.WriteLine($"Arc     = {arc}");
             Console.WriteLine($"Target  = {ellipse}");
 
             double RootFun(double u)
             {
-                Circle cen = new Circle(arc.GetPoint(u), 1);
-                Point trgt = ellipse.GetClosestPoint(cen, NumericalMethods.LooseTolerance);
+                Circle2 cen = new Circle2(arc.GetPoint(u), 1);
+                Point2 trgt = ellipse.GetClosestPoint(cen, NumericalMethods.LooseTolerance);
                 return trgt.DistanceTo(cen);
             }
 
             double u_sol = NumericalMethods.BisectionRoot(RootFun, 0, PI/2, 1e-6);
-            Circle circle = new Circle(arc.GetPoint(u_sol), 1);
-            Point closest = ellipse.GetClosestPoint(circle, NumericalMethods.LooseTolerance);
+            Circle2 circle = new Circle2(arc.GetPoint(u_sol), 1);
+            Point2 closest = ellipse.GetClosestPoint(circle, NumericalMethods.LooseTolerance);
             double distance = closest.DistanceTo(circle);
 
             Console.WriteLine($"Circle  = {circle}");

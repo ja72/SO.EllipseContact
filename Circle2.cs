@@ -5,44 +5,44 @@ using static System.Math;
 
 namespace SO
 {
-    public readonly struct Circle :
-        IEquatable<Circle>,
+    public readonly struct Circle2 :
+        IEquatable<Circle2>,
         IFormattable
     {
-        public Circle(double radius)
-            : this(Point.Origin, radius)
+        public Circle2(double radius)
+            : this(Point2.Origin, radius)
         { }
-        public Circle(Point center, double radius)
+        public Circle2(Point2 center, double radius)
         {
             this.Center = center;
             this.Radius=radius;
         }
 
         public double Radius { get; }
-        public Point Center { get; }
+        public Point2 Center { get; }
 
-        public Point GetPoint(double t)
+        public Point2 GetPoint(double t)
         {
             double x = Center.X + Radius * Cos(t), y = Center.Y + Radius * Sin(t);
-            return new Point(x, y);
+            return new Point2(x, y);
         }
 
-        public Point GetClosestPoint(Point point)
+        public Point2 GetClosestPoint(Point2 point)
         {
             double cx = point.X - Center.X, cy = point.Y - Center.Y;
             double t = Atan2(cy, cx);
             return GetPoint(t);
         }
 
-        public double DistanceTo(Point point)
+        public double DistanceTo(Point2 point)
             => Center.DistanceTo(point) - Radius;
-        public double DistanceTo(Circle circle)
+        public double DistanceTo(Circle2 circle)
             => Center.DistanceTo(circle.Center) - Radius - circle.Radius;
 
         #region Equality
-        public override bool Equals(object obj) => obj is Circle circle && Equals(circle);
+        public override bool Equals(object obj) => obj is Circle2 circle && Equals(circle);
 
-        public bool Equals(Circle other)
+        public bool Equals(Circle2 other)
         {
             return Radius==other.Radius&&
                    Center.Equals(other.Center);
@@ -52,16 +52,16 @@ namespace SO
         {
             var hashCode = -1545607722;
             hashCode=hashCode*-1521134295+Radius.GetHashCode();
-            hashCode=hashCode*-1521134295+EqualityComparer<Point>.Default.GetHashCode(Center);
+            hashCode=hashCode*-1521134295+EqualityComparer<Point2>.Default.GetHashCode(Center);
             return hashCode;
         }
 
-        public static bool operator ==(Circle circle1, Circle circle2)
+        public static bool operator ==(Circle2 circle1, Circle2 circle2)
         {
             return circle1.Equals(circle2);
         }
 
-        public static bool operator !=(Circle circle1, Circle circle2)
+        public static bool operator !=(Circle2 circle1, Circle2 circle2)
         {
             return !(circle1==circle2);
         }
