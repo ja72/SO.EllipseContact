@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ConsoleApp1")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("EllipseContact")]
+[assembly: AssemblyDescription("Test Code for SO question https://math.stackexchange.com/questions/4906653/find-the-rotation-necessary-to-bring-a-circle-in-contact-with-an-ellipse")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ConsoleApp1")]
+[assembly: AssemblyProduct("EllipseContact")]
 [assembly: AssemblyCopyright("Copyright ©  2024")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.34526.175
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SO.EliipseContact", "SO.EliipseContact.csproj", "{3CDCFA19-CC32-4105-AA5B-8369E4334B2D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SO.EllipseContact", "SO.EllipseContact.csproj", "{3CDCFA19-CC32-4105-AA5B-8369E4334B2D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
