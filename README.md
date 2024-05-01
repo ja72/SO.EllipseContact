@@ -98,3 +98,8 @@ Line    = 4*x + 19*y + -131 = 0
 Contact = Point(x=6.79233084048069, y=1.56150132997128)
 Target  = Point(x=7.57919716799924, y=5.29911638568437)
 ```
+
+## Related
+A closed-form solution to the distance problem is claimed to be found here:
+
+ - https://yehar.com/blog/?p=2926
