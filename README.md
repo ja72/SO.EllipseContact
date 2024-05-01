@@ -62,3 +62,9 @@ Circle  = Circle(x=4.46565766050686, y=1.77676854905003, r=1)
 Contact = Point(x=4.35294539705547, y=0.783136894362217)
 distance= 3.95975714484464E-06
 ```
+
+## Related
+
+A closed-form solution to the distance problem is claimed to be found here:
+
+ - https://yehar.com/blog/?p=2926
