@@ -34,19 +34,20 @@ namespace SO
 
         public Point2 GetClosestPoint(Point2 point, double tol)
         {
-            double cx = point.X - Center.X, cy = point.Y - Center.Y;
-            double Q = MajorAxis*MajorAxis-MinorAxis*MinorAxis;
-            double A = 2*cx*MajorAxis/Q;
-            double B = 2*cy*MinorAxis/Q;
+            var delta = Center.VectorTo(point);
+            var sign = Math.Sign(delta.X);
+            var Q = MajorAxis*MajorAxis-MinorAxis*MinorAxis;
+            var A = 2*delta.X*MajorAxis/Q;
+            var B = 2*delta.Y*MinorAxis/Q;
 
             double IterFun(double z)
             {
-                return 1/A*(B + 2*z/Sqrt(1+z*z));
+                return 1/A*(B + (sign)* 2*z/Sqrt(1+z*z));
             }
 
-            double z_sol = NumericalMethods.GaussPointIteration(IterFun, 0, tol);
+            var z_sol = NumericalMethods.GaussPointIteration(IterFun, 0, tol);
 
-            double t = Atan(z_sol);
+            var t = sign == 1 ? Atan(z_sol) : Atan(z_sol) + PI;
 
             return GetPoint(t);
         }
