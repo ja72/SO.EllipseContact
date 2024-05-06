@@ -35,20 +35,28 @@ namespace SO
         public Point2 GetClosestPoint(Point2 point, double tol)
         {
             var delta = Center.VectorTo(point);
-            var sign = Math.Sign(delta.X);
+            var sign = Sign(delta.X);
             var Q = MajorAxis*MajorAxis-MinorAxis*MinorAxis;
             var A = 2*delta.X*MajorAxis/Q;
             var B = 2*delta.Y*MinorAxis/Q;
-
-            double IterFun(double z)
+            double t;
+            if (A!=0)
             {
-                return 1/A*(B + (sign)* 2*z/Sqrt(1+z*z));
+
+                double IterFun(double z)
+                {
+                    return 1/A*(B + (sign)* 2*z/Sqrt(1+z*z));
+                }
+
+                var z_sol = NumericalMethods.GaussPointIteration(IterFun, 0, tol);
+
+                t = sign == 1 ? (float)Atan(z_sol) : (float)Atan(z_sol) + (float)PI;
+
             }
-
-            var z_sol = NumericalMethods.GaussPointIteration(IterFun, 0, tol);
-
-            var t = sign == 1 ? Atan(z_sol) : Atan(z_sol) + PI;
-
+            else
+            {
+                t = Sign(B)*(PI/2);
+            }
             return GetPoint(t);
         }
         public Point2 GetClosestPoint(Line2 line, double tol)
